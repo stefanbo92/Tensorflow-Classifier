@@ -15,7 +15,7 @@ y = tf.placeholder(tf.float32, [None, iN.n_output])
 keepratio = tf.placeholder(tf.float32)
 
 # Functions! 
-pred = iN.conv_basic(x, iN.weights, iN.biases, keepratio, 1)['out']
+pred = iN.conv_basic(x, iN.weights, iN.biases, keepratio, iN.use_gray)['out']
 init = tf.initialize_all_variables()
 print ("FUNCTIONS READY")
 

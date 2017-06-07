@@ -15,7 +15,7 @@ keepratio = tf.placeholder(tf.float32)
 
 # Functions! 
 _pred = iN.conv_basic(x, iN.weights, iN.biases, keepratio, iN.use_gray)['out']
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(_pred, y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=_pred, labels=y))
 WEIGHT_DECAY_FACTOR = 0.0001
 l2_loss = tf.add_n([tf.nn.l2_loss(v) 
             for v in tf.trainable_variables()])
@@ -23,14 +23,14 @@ cost = cost + WEIGHT_DECAY_FACTOR*l2_loss
 optm = tf.train.AdamOptimizer(learning_rate=0.001).minimize(cost)
 _corr = tf.equal(tf.argmax(_pred,1), tf.argmax(y,1)) # Count corrects
 accr = tf.reduce_mean(tf.cast(_corr, tf.float32)) # Accuracy
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 print ("FUNCTIONS READY")
 
 
 #optimize
 # Parameters
 training_epochs = 40
-batch_size      = 126
+batch_size      = 64
 display_step    = 1
 
 # Launch the graph
